@@ -1,21 +1,20 @@
 @extends('template.html')
 
-@section('title', 'Order')
+@section('title', 'History User')
 
 @section('body')
 @include('template.nav')
-
 <div class="container mtp">
-    <h2> Pesanan </h2>
+    <h2> History Pembelian </h2>
     @if (Session::has('notif'))
         <div class="alert alert-success">{{ Session::get('notif') }}</div>
     @endif
-    @foreach ($detailorder as $do)
+    @foreach ($orderHistory as $do)
     <div class="card mt-3">
         <div class="card-body">
             <div class="row">
                 <div class="col-md-3">
-                    <img src="{{ asset($do->Event->foto) }}" class="img-fluid">
+                    <img src="{{ asset($do->Event->foto) }}" class="img-fluid" style="margin-top: 25%">
                 </div>
                 <div class="col-md-9">
                     <p><strong>Event:</strong> {{ $do->Event->nama }}</p>
@@ -26,9 +25,15 @@
                     <p><strong>Total Harga:</strong> Rp.{{ number_format($do->pricetotal, 0, '.', '.') }}</p>
                     <p><strong>Status Pembayaran:</strong> {{ $do->status_pembayaran }}</p>
 
-                    
-                        <a href="{{ route('bayar', $do->id) }}" class="btn btn-primary">Bayar</a>
-                        <a href="{{ route('batalkanpesanan', $do->id) }}" class="btn btn-danger" onclick="return confirm('Yakin untuk membatalkan???')">Batalkan Pesanan</a>
+                    @if ($do->status_pembayaran === 'completed')
+                        <p>Pembayaran sudah di konfirmasi</p>
+                        <hr>
+                        <a href="{{ route('printInvoiceTicket', $do->id) }}" class="btn btn-primary"> Cetak Invoice</a>
+                    @elseif ($do->status_pembayaran === 'rejected')
+                        <p>Maaf, pembayaran Anda ditolak.</p>
+                    @elseif ($do->status_pembayaran === 'pending' && $do->bukti_pembayaran)
+                        <p>Pembayaran selesai. Menunggu konfirmasi</p>
+                    @endif
                 </div>
             </div>
         </div>

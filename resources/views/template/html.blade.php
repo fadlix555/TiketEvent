@@ -5,15 +5,88 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>@yield('title')</title>
+
     <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/dataTables.bootstrap5.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/responsive.bootstrap5.min.css') }}">
+    
+
+    <script src="{{ asset('js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('js/jquery-3.7.0.js') }}"></script>
+    <script src="{{ asset('js/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('js/dataTables.bootstrap5.min.js') }}"></script>
+    <script src="{{ asset('js/dataTables.responsive.min.js') }}"></script>
+    <script src="{{ asset('js/responsive.bootstrap5.min.js') }}"></script>
 </head>
 <style>
+
+    body{
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+    }
+
+    .mtp{
+        margin-top: 7em;
+        margin-bottom: 7em;
+    }
+
     .card{
-        box-shadow: 0px 2px 2px 0px;
+        /* border-top: #ced4da; */
+        background-color: #fff;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        transition: box-shadow 0.3s ease;
+    }
+
+    .card-hover:hover {
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Warna bayangan sedikit lebih gelap saat hover */
+    }
+
+    .card {
+        transition: transform 0.3s ease;
+    }
+
+    .card-hover:hover {
+        transform: scale(1.05); /* Perbesar kartu saat hover */
+    }
+
+    .border-bottom {
+        border: none;
+        border-bottom: 1px solid #ced4da; /* Bootstrap gray color for the underline */
+        border-radius: 0;
+    }
+
+    .custom-btn {
+            border: 1px solid #ffffff; /* Bootstrap gray color for outline */
+            background-color:  rgb(73, 139, 198); /* Light background color */
+            color: #f8f8f8; /* Text color */
+    }
+
+    th{
+        white-space: normal;
+        border: 1px solid black;
+    }
+
+    td{
+        white-space: normal;
+        border: 1px solid black;
+    }
+
+    footer{
+        margin-top: auto;
+        width: 100%;
     }
 
 </style>
 <body>
-    @yield('container')
+    @yield('body')
+    <footer class="bg-secondary text-light text-center p-3">
+        &copy; {{ date('Y') }} Tivent . All Rights Reserved.
+    </footer>
+<script>
+    new DataTable('#example',{
+        responsive : true;
+    });
+</script>
 </body>
 </html>

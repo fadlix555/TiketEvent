@@ -1,9 +1,9 @@
 @extends('template.html')
 
 @section('title', 'Tambah Events')
-@section('container')
+@section('body')
 @include('template.navadmin')
-<div class="container mt-5">
+<div class="container mtp">
     <form action="{{ route('posttambah') }}" method="POST" enctype="multipart/form-data">
         @csrf
         <div class="card col-sm-6 p-3 mx-auto">

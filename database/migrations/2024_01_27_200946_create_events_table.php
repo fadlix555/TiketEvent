@@ -24,7 +24,7 @@ class CreateEventsTable extends Migration
             $table->date('tanggal');
             $table->time('waktu');
             $table->integer('stok');
-            $table->foreignId('Category_id')->constrained();
+            $table->foreignId('Category_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
             $table->timestamps();
         });
     }

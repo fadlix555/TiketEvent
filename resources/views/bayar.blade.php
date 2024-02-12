@@ -2,10 +2,10 @@
 
 @section('title', 'Bayar')
 
-@section('container')
+@section('body')
 @include('template.nav')
 
-<div class="container mt-5">
+<div class="container mtp">
     <div class="card col-6 p-3 mx-auto">
         <form action="{{ route('postbayar', $detailorder->id) }}" method="POST" class="form-group" enctype="multipart/form-data">
             @csrf
@@ -17,7 +17,7 @@
 
             <p class="text-center">Transfer ke Bank PDI No: 7946939369</p>
             <p class="text-center">Pesan Tiket: {{ $detailorder->qty }}</p>
-            <p class="text-center">Harga Total: {{ $detailorder->pricetotal }}</p>
+            <p class="text-center">Harga Total: {{number_format( $detailorder->pricetotal, 0,',', '.') }}</p>
 
             <div class="mb-3">
                 <label for="bukti_pembayaran" class="form-label">Upload Bukti Pembayaran</label>

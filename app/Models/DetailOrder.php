@@ -16,9 +16,9 @@ class DetailOrder extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function event()
+    public function Event()
     {
-        return $this->belongsTo(Event::class);
+        return $this->belongsTo(Event::class, 'event_id');
     }
 
     public function order()

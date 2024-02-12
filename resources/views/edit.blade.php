@@ -1,9 +1,9 @@
 @extends('template.html')
 
 @section('title', 'Edit Events')
-@section('container')
+@section('body')
 @include('template.navadmin')
-<div class="container mt-5">
+<div class="container mtp">
     @if (Session::has('berhasil'))
         <alert class="alert-success">{{ Session::get('berhasil') }}</alert>
     @endif
