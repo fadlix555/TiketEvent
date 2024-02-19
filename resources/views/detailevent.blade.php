@@ -2,8 +2,8 @@
 
 @section('title', 'Detail Event')
 
-@include('template.nav')
 @section('body')
+@include('template.nav')
 <div class="container mtp">
     @if (Session::has('notif'))
         <p class="alert alert-danger">{{ Session::get('notif') }}</p>
@@ -27,19 +27,48 @@
                             </div>
                         </div>
                         <div class="col-md-6">
+                            <div class="row mb-3">
+                                <div class="card col-2">
+                                    <img src="{{ asset('img/location.png') }}" height="75px" class="p-2">
+                                    <p class="card-text text-center">Lokasi</p>
+                                </div>
+                                <div class="card col-4" height="75px">
+                                    <h6 class="my-auto">{{ $Event->lokasi }}</h6>
+                                    <hr>
+                                    <h6 class="my-auto"><strong>Kategori: </strong>{{ $Event->category->nama }}</h6>
+                                </div>
+                                <div class="card col-sm-2">
+                                    <img src="{{ asset('img/calendar.png') }}" height="75px" class="p-2">
+                                    <p class="card-text text-center">Tanggal & Waktu</p>
+                                </div>
+                                <div class="card col-4" height="75px">
+                                    <h6 class="my-auto"><strong>Tanggal: </strong>{{ $Event->tanggal }} </h6>
+                                    <hr>
+                                    <h6 class="my-auto"><strong>Waktu: </strong> {{ $Event->waktu }}</h6>
+                                </div>
+                            </div>
+                            @if ($Event->status == 'inactive')
+                                <div class="card mt-5 p-4">
+                                    <hr>
+                                    <h5 class="text-center">Event sudah selesai</h5>
+                                    <hr>
+                                </div>
+                            @else
                             <div class="card p-4">
                                 <h4 class="text-center mb-4">Pesan Tiket</h4>
-                                <p class="card-text"><strong>Lokasi:</strong> {{ $Event->lokasi }}</p>
-                                <p class="card-text"><strong>Tanggal:</strong> {{ $Event->tanggal }}</p>
-                                <p class="card-text"><strong>Waktu:</strong> {{ $Event->waktu }}</p>
                                 <h6 class="card-text">Rp. {{ number_format($Event->harga, 0, ',', '.') }}</h6>
                                 <h6 class="card-text">Sisa Tiket: {{ number_format($Event->stok, 0, ',', '.') }}</h6>
                                 <label for="banyak" class="form-label">Total Pesanan:</label>
                                 <input type="number" name="banyak" class="form-control" required value="1" min="1">
                                 <hr>
-                                <button type="submit" class="btn btn-primary mb-2">Pesan Sekarang</button>
+                                @if (auth()->check())
+                                    <button type="submit" class="btn btn-primary mb-2">Pesan Sekarang</button>
+                                @else
+                                    <button type="submit" class="btn btn-primary mb-2">Masuk</button>
+                                @endif
                                 <a href="/" class="btn btn-dark mb-2">Kembali</a>
                             </div>
+                            @endif
                         </div>
                     </div>
                 </div>

@@ -16,7 +16,7 @@ class AdminController extends Controller
     public function events()
     {
         $events = Event::all();
-        return view('admin', compact('events'));
+        return view('admin.index', compact('events'));
     }
 
     public function updateEventStatus(Event $event, Request $request)
@@ -43,15 +43,16 @@ class AdminController extends Controller
             $query->where('status_pembayaran', 'pending');
         })->get();
 
-        return view('orders', compact('pendingOrders'));
+        return view('kasir.pesanan', compact('pendingOrders'));
     }
 
     public function completedRejectedOrders(Request $request)
     {
         $completedRejectedOrders = Order::with('detailOrders')->whereHas('detailOrders', function ($query) {
-            $query->whereIn('status_pembayaran', ['completed', 'rejected']);
+            $query->whereIn('status_pembayaran', ['completed','rejected']);
         });
-    
+        
+
         if ($request->has('start_date') && $request->has('end_date')) {
             // Mendapatkan rentang tanggal dari input date
             $startDate = $request->input('start_date');
@@ -67,7 +68,7 @@ class AdminController extends Controller
     
         $completedRejectedOrders = $completedRejectedOrders->get();
     
-        return view('riwayat', compact('completedRejectedOrders'));
+        return view('owner.riwayat', compact('completedRejectedOrders'));
     }
 
     public function printRiwayatTransaksi(Request $request)
@@ -92,7 +93,7 @@ class AdminController extends Controller
         $orders = $orders->get();
     
         // Menghasilkan file PDF dari view 'riwayat-pdf' dengan data yang dimasukkan
-        $pdf = PDF::loadView('riwayat-pdf', compact('orders'));
+        $pdf = PDF::loadView('owner.riwayat-pdf', compact('orders'));
     
         // Mengunduh file PDF dengan nama tertentu
         return $pdf->download('Riwayat-Transaksi.pdf');
@@ -116,6 +117,10 @@ class AdminController extends Controller
             $detailorder->event->stok -= $detailorder->qty;
         }
 
+        if ($detailorder->status_pembayaran === 'rejected') {
+            $detailorder->pricetotal = 0;
+        }
+
         Log::create([
             'user_id' => auth()->id(),
             'activity' => Auth::user()->role . ' Mengkonfirmasi pembayaran menjadi ' . $detailorder->status_pembayaran,
@@ -130,7 +135,7 @@ class AdminController extends Controller
     public function tambah()
     {
         $data = Category::all();
-        return view('tambah',compact('data'));
+        return view('admin.tambah',compact('data'));
     }
 
     public function posttambah(request $request)
@@ -172,7 +177,7 @@ class AdminController extends Controller
     public function edit(event $event)
     {
         $category = Category::all();
-        return view('edit',compact('event', 'category'));
+        return view('admin.edit',compact('event', 'category'));
         
     }
 
@@ -206,7 +211,7 @@ class AdminController extends Controller
     public function log()
     {
         $log = Log::all();
-        return view('log',compact('log'));
+        return view('owner.log',compact('log'));
     }
 
     public function hapus(event $event)

@@ -10,7 +10,6 @@
     <link rel="stylesheet" href="{{ asset('css/dataTables.bootstrap5.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/responsive.bootstrap5.min.css') }}">
     
-
     <script src="{{ asset('js/bootstrap.min.js') }}"></script>
     <script src="{{ asset('js/jquery-3.7.0.js') }}"></script>
     <script src="{{ asset('js/jquery.dataTables.min.js') }}"></script>
@@ -24,6 +23,7 @@
         display: flex;
         flex-direction: column;
         min-height: 100vh;
+        background-color: #e5e3d6e7;
     }
 
     .mtp{
@@ -56,22 +56,6 @@
         border-radius: 0;
     }
 
-    .custom-btn {
-            border: 1px solid #ffffff; /* Bootstrap gray color for outline */
-            background-color:  rgb(73, 139, 198); /* Light background color */
-            color: #f8f8f8; /* Text color */
-    }
-
-    th{
-        white-space: normal;
-        border: 1px solid black;
-    }
-
-    td{
-        white-space: normal;
-        border: 1px solid black;
-    }
-
     footer{
         margin-top: auto;
         width: 100%;
@@ -80,8 +64,26 @@
 </style>
 <body>
     @yield('body')
-    <footer class="bg-secondary text-light text-center p-3">
-        &copy; {{ date('Y') }} Tivent . All Rights Reserved.
+    <footer class="text-light text-center p-3" style="background-color: black">
+        <div class="row m-3">
+            <div class="col-5 m-4">
+                <h5 class="text-start">Kontak Kami</h5>
+                <p class="text-start">
+                    No Telepon : <a href="#" class="text-white">+62666999</a>
+                    <br>
+                    Whatsapp : <a href="#" class="text-white">+62666999</a>
+                    <br>
+                    Email : <a href="#" class="text-white">superadmintixTake@gmail.com</a>
+                </p>
+                <h6 class="text-start"> Alamat </h6>
+                <p class="text-start"> Jl. Indah No 1 iya indah kaya kamu yang no1 di hatiku ❤️😘</p>
+            </div>
+            <div class="col-5 m-3">
+                <img src="{{ asset('img/pertajam.png') }}" class="mb-2" style="width: 100px">
+                <p>Tix.Take adalah sebuah platform yang dirancang untuk memberikan kemudahan kepada pengguna dalam menemukan, memilih, dan membeli tiket event tanpa perlu menghabiskan waktu untuk mengantri atau mencari informasi tiket secara manual.</p>
+            </div>
+        </div>
+        &copy; {{ date('Y') }} Tix.Take
     </footer>
 <script>
     new DataTable('#example',{

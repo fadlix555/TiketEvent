@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::get('/', [UserController::class, 'welcome'])->name('welcome');
+Route::get('/cari-event', [UserController::class, 'cariEvent'])->name('cariEvent');
 Route::get('/login', [AuthController::class, 'login'])->name('login');
 Route::get('/register', [AuthController::class, 'register'])->name('register');
 Route::post('/postlogin', [AuthController::class, 'postlogin'])->name('postlogin');
@@ -25,11 +26,12 @@ Route::post('/postregister', [AuthController::class, 'postregister'])->name('pos
 
 Route::get('/detail/{Event}', [UserController::class, 'detail'])->name('detail');
 
+Route::post('/postorder/{Event}', [UserController::class, 'postorder'])->name('postorder');
+
 Route::group(['middleware' => ['auth']], function () {
     //Route Untuk Event
     Route::get('/order', [UserController::class, 'order'])->name('order');
     Route::get('/history', [UserController::class, 'history'])->name('history');
-    Route::post('/postorder/{Event}', [UserController::class, 'postorder'])->name('postorder');
     
     Route::get('/bayar/{detailorder}', [UserController::class, 'bayar'])->name('bayar');
     Route::post('/postbayar/{detailorder}', [UserController::class, 'postbayar'])->name('postbayar');
